@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Expenses from './components/Expenses/Expenses';
 import NewExpense from './components/NewExpense/NewExpense';
 
 const App = () => {
-  const expenses = [
+  const [expenses, setExpenses] = useState([
     {
       id: 'e1',
       title: 'Toilet Paper',
@@ -23,10 +23,22 @@ const App = () => {
       amount: 450,
       date: new Date(2021, 5, 12),
     },
-  ];
+  ]);
   return (
     <div>
-      <NewExpense/>
+      <NewExpense
+        onSaveExpenseData={(data) =>
+          setExpenses((prev) => [
+            ...prev,
+            {
+              id: Math.random().toString(),
+              title: data.title,
+              amount: data.amount,
+              date: data.date
+            },
+          ])
+        }
+      />
       <Expenses items={expenses} />
     </div>
   );
